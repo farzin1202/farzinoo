@@ -460,7 +460,7 @@ export default function App() {
       
       // Safety Check: If no Supabase config (empty or placeholder check), force Guest Mode
       // This prevents the app from trying to connect to a non-existent DB
-      const hasSupabase = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_URL.length > 0;
+      const hasSupabase = import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_URL.length > 0;
       
       if (!hasSupabase) {
           console.warn("Supabase credentials missing. Defaulting to Guest Mode with mock data.");
