@@ -67,9 +67,10 @@ export const createStrategy = async (userId: string, name: string): Promise<Stra
     .from('strategies')
     .insert({ user_id: userId, name })
     .select()
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
+  if (!data) throw new Error('Failed to create strategy');
   return { ...mapStrategyFromDB(data), months: [] };
 };
 
@@ -90,9 +91,10 @@ export const createMonth = async (strategyId: string, name: string): Promise<Mon
     .from('months')
     .insert({ strategy_id: strategyId, name })
     .select()
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
+  if (!data) throw new Error('Failed to create month');
   return { ...mapMonthFromDB(data), trades: [] };
 };
 
@@ -121,9 +123,10 @@ export const createTrade = async (monthId: string, trade: Partial<Trade>): Promi
     .from('trades')
     .insert(dbTrade)
     .select()
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
+  if (!data) throw new Error('Failed to create trade');
   return mapTradeFromDB(data);
 };
 
